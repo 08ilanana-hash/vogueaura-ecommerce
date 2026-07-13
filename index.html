@@ -7,14 +7,12 @@
     
     <!-- Bagian Kode Logo -->
     <link rel="icon" type="image/png" href="aura-logo.png">
-    <!-- Akhir Bagian Kode Logo -->
-
     <link rel="stylesheet" href="style.css">
-
+    
     <!-- Mengimpor Font Sesuai Desain Figma Premium -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -26,40 +24,55 @@
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Montserrat', sans-serif;
         }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: var(--font-sans);
         }
-
         body {
-            background-color: #111;
+            background-color: #f5efe3;
+            color: var(--text-dark);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
         }
 
-        /* Mockup Smartphone Frame */
+        /* Responsive Layout Base Container */
         .phone-frame {
-            width: 390px;
-            height: 844px;
+            width: 100%;
+            max-width: 450px; /* Maksimal lebar untuk tampilan mobile di desktop */
+            height: 100vh;
             background-color: var(--bg-color);
-            border: 12px solid #333;
-            border-radius: 40px;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            box-shadow: none;
         }
 
-        /* Status Bar */
+        /* TAMPILAN UNTUK DESKTOP (Layar Lebar) */
+        @media (min-width: 768px) {
+            body {
+                background-color: #111; /* Latar belakang gelap estetik untuk membingkai mockup desktop */
+            }
+            .phone-frame {
+                max-width: 390px;
+                height: 844px;
+                border: 12px solid #333;
+                border-radius: 40px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            }
+            .status-bar {
+                display: flex !important; /* Status bar hanya muncul di simulasi desktop */
+            }
+        }
+
+        /* Status Bar (Hanya tampil cantik di simulasi desktop) */
         .status-bar {
             padding: 12px 20px 5px 20px;
-            display: flex;
+            display: none;
             justify-content: space-between;
             font-size: 12px;
             font-weight: 600;
@@ -67,7 +80,7 @@
             z-index: 10;
             letter-spacing: 0.5px;
         }
-
+        
         /* Container halaman dengan scroll internal */
         .page-content {
             flex-grow: 1;
@@ -75,14 +88,12 @@
             padding: 20px;
             padding-bottom: 90px; 
         }
-
         .page-content::-webkit-scrollbar { width: 0px; }
-
+        
         .page {
             display: none;
             flex-direction: column;
         }
-
         .page.active {
             display: flex;
         }
@@ -98,7 +109,6 @@
             letter-spacing: 1px;
             display: inline-block;
         }
-
         .logo-circle {
             width: 95px;
             height: 95px;
@@ -113,7 +123,6 @@
             font-size: 36px;
             font-weight: 700;
         }
-
         .brand-name {
             text-align: center;
             font-family: var(--font-serif);
@@ -123,18 +132,15 @@
             margin-bottom: 30px;
             font-weight: 700;
         }
-
         .card-form {
             background-color: rgba(255, 255, 255, 0.92);
             padding: 25px 20px;
             border-radius: 24px;
             box-shadow: 0 10px 25px rgba(67, 22, 26, 0.05);
         }
-
         .form-group {
             margin-bottom: 18px;
         }
-
         .form-group label {
             font-size: 11px;
             color: var(--text-muted);
@@ -144,7 +150,6 @@
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
-
         .form-group input, .form-group select {
             width: 100%;
             border: none;
@@ -156,7 +161,6 @@
             color: var(--text-dark);
             font-weight: 500;
         }
-
         .btn-main {
             width: 100%;
             background-color: var(--primary-color);
@@ -170,8 +174,11 @@
             margin-top: 10px;
             letter-spacing: 1.5px;
             text-transform: uppercase;
+            transition: background 0.3s;
         }
-
+        .btn-main:hover {
+            opacity: 0.9;
+        }
         .switch-link {
             text-align: center;
             margin-top: 20px;
@@ -189,14 +196,12 @@
             align-items: center;
             padding-bottom: 15px;
         }
-
         .app-header h2 {
             font-family: var(--font-serif);
             font-size: 20px;
             color: var(--primary-color);
             font-weight: 700;
         }
-
         .banner-koleksi {
             width: 100%;
             height: 150px;
@@ -207,7 +212,6 @@
             position: relative;
             margin-bottom: 20px;
         }
-
         .banner-text {
             position: absolute;
             bottom: 15px;
@@ -215,13 +219,12 @@
             color: white;
         }
         .banner-text h3 { font-family: var(--font-serif); font-size: 18px; font-weight: 700; }
-
+        
         .filter-tabs {
             display: flex;
             gap: 8px;
             margin-bottom: 20px;
         }
-
         .tab {
             padding: 6px 14px;
             border: 1px solid var(--primary-color);
@@ -232,18 +235,15 @@
             color: var(--primary-color);
             cursor: pointer;
         }
-
         .tab.active {
             background-color: var(--primary-color);
             color: white;
         }
-
         .product-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
-
         .product-card {
             background: white;
             border-radius: 20px;
@@ -251,18 +251,16 @@
             position: relative;
             cursor: pointer;
         }
-
         .product-img {
             width: 100%;
             height: 140px;
             background-size: cover;
             background-position: center;
         }
-
         .product-info { padding: 12px; }
         .product-info h4 { font-size: 12px; margin-bottom: 4px; font-weight: 600; }
         .product-info p { font-size: 13px; font-weight: 700; color: var(--primary-color); }
-
+        
         /* DETAIL PRODUK */
         .detail-img {
             width: 100%;
@@ -272,18 +270,16 @@
             background-position: center;
             margin-bottom: 15px;
         }
-
         .detail-title { font-family: var(--font-serif); font-size: 22px; color: var(--primary-color); margin-bottom: 5px; font-weight: 700; }
         .detail-price { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
         .detail-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 15px; }
-
+        
         /* METODE PEMBAYARAN */
         .payment-methods {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
         }
-
         .method-btn {
             flex: 1;
             padding: 12px;
@@ -294,13 +290,12 @@
             font-weight: 700;
             cursor: pointer;
         }
-
         .method-btn.active {
             background-color: var(--primary-color);
             color: white;
         }
-
-        /* ================= MANAGEMENT ADMIN CSS ================= */
+        
+        /* MANAGEMENT ADMIN CSS */
         .admin-scroll-menu {
             display: flex;
             gap: 15px;
@@ -309,8 +304,9 @@
             border-bottom: 1px solid rgba(0,0,0,0.05);
             padding-bottom: 5px;
             font-weight: 600;
+            overflow-x: auto;
         }
-
+        .admin-scroll-menu::-webkit-scrollbar { height: 0px; }
         .admin-menu-item { 
             color: var(--text-muted); 
             cursor: pointer; 
@@ -322,13 +318,12 @@
             font-weight: 700; 
             border-bottom: 2px solid var(--primary-color); 
         }
-
         .stat-card { background: white; border-radius: 20px; padding: 15px; margin-bottom: 15px; }
         .stat-value { font-size: 24px; font-weight: 700; color: var(--primary-color); margin-top: 5px; }
         
         .tx-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f8f8f8; }
         .tx-avatar { width: 34px; height: 34px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: 700; }
-
+        
         /* FIXED BOTTOM NAVIGATION BAR */
         .bottom-nav {
             position: absolute;
@@ -340,11 +335,14 @@
             display: none;
             justify-content: space-around;
             align-items: center;
-            border-bottom-left-radius: 28px;
-            border-bottom-right-radius: 28px;
             z-index: 100;
         }
-
+        @media (min-width: 768px) {
+            .bottom-nav {
+                border-bottom-left-radius: 28px;
+                border-bottom-right-radius: 28px;
+            }
+        }
         .nav-item { color: rgba(255,255,255,0.45); font-size: 20px; cursor: pointer; font-weight: 600; }
         .nav-item.active { color: white; }
         .nav-text-btn { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
@@ -353,14 +351,13 @@
 <body>
 
     <div class="phone-frame">
-        <!-- Status Bar -->
+        <!-- Status Bar (Hanya tampil di Desktop) -->
         <div class="status-bar">
             <span>9:41</span>
             <span>••• VogueNet</span>
         </div>
-
+        
         <div class="page-content">
-
             <!-- ================= PAGE 1: REGISTER ================= -->
             <div id="page-register" class="page active">
                 <div class="back-button">‹ Buat Akun</div>
@@ -395,9 +392,9 @@
             <!-- ================= PAGE 3: BERANDA ================= -->
             <div id="page-beranda" class="page">
                 <div class="app-header">
-                    <span style="font-size: 22px; color: var(--primary-color);">≡</span>
+                    <span style="font-size: 22px; color: var(--primary-color); cursor: pointer;">≡</span>
                     <h2>BERANDA</h2>
-                    <span style="font-size: 20px; color: var(--primary-color);">⌕</span>
+                    <span style="font-size: 20px; color: var(--primary-color); cursor: pointer;">⌕</span>
                 </div>
                 <div class="banner-koleksi">
                     <div class="banner-text">
@@ -492,7 +489,6 @@
                     <div class="card-form" style="background: white; padding: 15px;">
                         <h4 style="font-size: 12px; margin-bottom: 12px; font-weight:700; color: var(--primary-color);">Riwayat Masuk Transaksi (6 Orang)</h4>
                         <div id="admin-tx-list">
-                            <!-- 5 Data Awal dengan Nama yang Ditentukan (Data ke-6 ditambahkan dinamis saat checkout atau langsung tampil) -->
                             <div class="tx-item">
                                 <div style="display: flex; gap: 10px; align-items: center;">
                                     <div class="tx-avatar">I</div>
@@ -589,7 +585,6 @@
                     </div>
                 </div>
             </div>
-
         </div> <!-- Tutup Page Content -->
 
         <!-- FIXED BOTTOM NAVIGATION BAR -->
@@ -598,7 +593,6 @@
             <span class="nav-item" id="nav-btn-cart" onclick="clickNav('cart')">🛒</span>
             <span class="nav-item nav-text-btn" onclick="clickNav('logout')">Keluar 👤</span>
         </div>
-
     </div>
 
     <!-- LOGIC SYSTEM CONTROLLER -->
@@ -612,13 +606,14 @@
             pages.forEach(p => p.classList.remove('active'));
             
             document.getElementById(pageId).classList.add('active');
-
             const bottomNav = document.getElementById('global-nav');
             if (pageId === 'page-register' || pageId === 'page-login') {
                 bottomNav.style.display = 'none';
             } else {
                 bottomNav.style.display = 'flex';
             }
+            // Reset scroll ke atas tiap pindah halaman
+            document.querySelector('.page-content').scrollTop = 0;
         }
 
         function prosesLogin() {
@@ -641,31 +636,30 @@
             produkTerpilih.nama = nama;
             produkTerpilih.harga = parseInt(harga.replace(/[^0-9]/g, ''));
             produkTerpilih.img = imgUrl;
-
             document.getElementById('detail-title-text').innerText = nama;
             document.getElementById('detail-price-text').innerText = harga;
             document.getElementById('detail-img-box').style.backgroundImage = `url('${imgUrl}')`;
             document.getElementById('detail-qty').value = 1;
-
             navigateTo('page-detail');
         }
 
         function tambahKeKeranjang() {
             const qty = parseInt(document.getElementById('detail-qty').value);
+            if(qty < 1 || isNaN(qty)) return alert('Masukkan jumlah yang valid');
+            
             keranjang.nama = produkTerpilih.nama;
             keranjang.hargaSatuan = produkTerpilih.harga;
             keranjang.qty = qty;
             keranjang.total = produkTerpilih.harga * qty;
-
+            
             document.getElementById('cart-item-title').innerText = keranjang.nama;
             document.getElementById('cart-item-qty').innerText = "Jumlah: " + qty + " pcs";
             document.getElementById('cart-subtotal').innerText = "Rp. " + keranjang.total.toLocaleString('id-ID');
             document.getElementById('cart-total').innerText = "Rp. " + (keranjang.total + 15000).toLocaleString('id-ID');
-
+            
             const btnCheckout = document.getElementById('btn-checkout-akses');
             btnCheckout.removeAttribute('disabled');
             btnCheckout.style.opacity = '1';
-
             navigateTo('page-keranjang');
             resetNavHighlight('cart');
         }
@@ -675,7 +669,6 @@
             
             totalPenjualanAdmin += (keranjang.total + 15000);
             document.getElementById('admin-penjualan-text').innerText = "Rp. " + totalPenjualanAdmin.toLocaleString('id-ID');
-
             const txList = document.getElementById('admin-tx-list');
             const dataBaru = `
                 <div class="tx-item">
@@ -693,7 +686,7 @@
                 </div>
             `;
             txList.insertAdjacentHTML('afterbegin', dataBaru);
-
+            
             // Reset Keranjang
             document.getElementById('cart-item-title').innerText = "Belum Ada Produk";
             document.getElementById('cart-item-qty').innerText = "Jumlah: 0";
@@ -702,22 +695,17 @@
             const btnCheckout = document.getElementById('btn-checkout-akses');
             btnCheckout.setAttribute('disabled', 'true');
             btnCheckout.style.opacity = '0.5';
-
             navigateTo('page-beranda');
             resetNavHighlight('home');
         }
 
         function switchSubAdmin(subMenu) {
             const subContents = document.querySelectorAll('.admin-sub-content');
-            subContents.forEach(c => {
-                c.style.display = 'none';
-            });
+            subContents.forEach(c => c.style.display = 'none');
             
             const menuItems = document.querySelectorAll('.admin-scroll-menu .admin-menu-item');
-            menuItems.forEach(i => {
-                i.classList.remove('active');
-            });
-
+            menuItems.forEach(i => i.classList.remove('active'));
+            
             if (subMenu === 'dashboard') {
                 document.getElementById('admin-sub-dashboard').style.display = 'block';
                 document.getElementById('sub-menu-dashboard').classList.add('active');
@@ -734,10 +722,9 @@
             const gaun = document.getElementById('stok-gaun').value;
             const blazer = document.getElementById('stok-blazer').value;
             alert(`Stok disimpan!\nGaun: ${gaun} pcs\nBlazer: ${blazer} pcs`);
-
+            
             const alertTitle = document.getElementById('alert-title-stok');
             const alertText = document.getElementById('stok-alert-text');
-
             if (parseInt(gaun) < 5 || parseInt(blazer) < 5) {
                 alertTitle.innerText = "⚠️ Peringatan Stok Kritis!";
                 alertText.innerText = "Bahaya! Stok sediaan barang kurang dari 5 pcs. Segera restok.";
