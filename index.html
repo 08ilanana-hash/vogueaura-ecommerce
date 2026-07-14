@@ -32,7 +32,7 @@
             font-family: var(--font-sans);
         }
 
-        /* --- BASE STYLES (Tampilan Dasar / Mobile-First) --- */
+        /* --- BASE STYLES --- */
         body {
             background-color: var(--bg-color);
             color: var(--text-dark);
@@ -41,13 +41,12 @@
             flex-direction: column;
         }
 
-        /* Container utama sekarang memenuhi layar, namun memiliki batas maksimal di layar super lebar agar tidak terlalu melar */
         .app-container {
             width: 100%;
             max-width: 1200px; 
             margin: 0 auto;
             padding: 20px;
-            padding-bottom: 90px; /* Jarak aman di mobile agar tidak tertutup nav */
+            padding-bottom: 90px; 
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -63,7 +62,6 @@
         }
 
         /* --- NAVIGATION BAR --- */
-        /* Di HP: Navigasi nempel di bawah layar */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -71,7 +69,7 @@
             width: 100%;
             height: 65px;
             background-color: var(--primary-color);
-            display: none; /* diatur lewat JS */
+            display: none; 
             justify-content: space-around;
             align-items: center;
             z-index: 100;
@@ -81,7 +79,7 @@
         .nav-item.active { color: white; }
         .nav-text-btn { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
 
-        /* --- UI COMPONENTS (Responsive) --- */
+        /* --- UI COMPONENTS --- */
         .back-button {
             font-size: 13px;
             color: var(--primary-color);
@@ -121,7 +119,7 @@
             border-radius: 24px;
             box-shadow: 0 10px 25px rgba(67, 22, 26, 0.05);
             width: 100%;
-            max-width: 450px; /* Form login/register tetap proporsional di tengah */
+            max-width: 450px; 
             margin: 0 auto;
         }
         .form-group {
@@ -161,9 +159,7 @@
             letter-spacing: 1.5px;
             text-transform: uppercase;
         }
-        .btn-main:hover {
-            opacity: 0.9;
-        }
+        .btn-main:hover { opacity: 0.9; }
         .switch-link {
             text-align: center;
             margin-top: 20px;
@@ -174,7 +170,7 @@
             text-transform: uppercase;
         }
 
-        /* --- BERANDA & GRID PRODUK (Sangat Responsif) --- */
+        /* --- BERANDA & GRID PRODUK --- */
         .app-header {
             display: flex;
             justify-content: space-between;
@@ -207,11 +203,7 @@
         }
         .banner-text h3 { font-family: var(--font-serif); font-size: 22px; font-weight: 700; }
         
-        .filter-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
+        .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
         .tab {
             padding: 8px 18px;
             border: 1px solid var(--primary-color);
@@ -222,15 +214,11 @@
             color: var(--primary-color);
             cursor: pointer;
         }
-        .tab.active {
-            background-color: var(--primary-color);
-            color: white;
-        }
+        .tab.active { background-color: var(--primary-color); color: white; }
 
-        /* Grid Produk yang otomatis berubah kolomnya tergantung lebar layar */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 Kolom di HP */
+            grid-template-columns: repeat(2, 1fr); 
             gap: 15px;
         }
         .product-card {
@@ -241,9 +229,7 @@
             cursor: pointer;
             transition: transform 0.2s;
         }
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
+        .product-card:hover { transform: translateY(-5px); }
         .product-img {
             width: 100%;
             height: 180px;
@@ -254,12 +240,8 @@
         .product-info h4 { font-size: 13px; margin-bottom: 6px; font-weight: 600; }
         .product-info p { font-size: 14px; font-weight: 700; color: var(--primary-color); }
         
-        /* DETAIL PRODUK (Responsive) */
-        .detail-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+        /* DETAIL PRODUK */
+        .detail-container { display: flex; flex-direction: column; gap: 20px; }
         .detail-img {
             width: 100%;
             height: 300px;
@@ -267,20 +249,13 @@
             background-size: cover;
             background-position: center;
         }
-        .detail-content {
-            display: flex;
-            flex-direction: column;
-        }
+        .detail-content { display: flex; flex-direction: column; }
         .detail-title { font-family: var(--font-serif); font-size: 24px; color: var(--primary-color); margin-bottom: 5px; font-weight: 700; }
         .detail-price { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
         .detail-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
         
         /* PEMBAYARAN */
-        .payment-methods {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+        .payment-methods { display: flex; gap: 10px; margin-bottom: 20px; }
         .method-btn {
             flex: 1;
             padding: 12px;
@@ -291,10 +266,7 @@
             font-weight: 700;
             cursor: pointer;
         }
-        .method-btn.active {
-            background-color: var(--primary-color);
-            color: white;
-        }
+        .method-btn.active { background-color: var(--primary-color); color: white; }
         
         /* MANAGEMENT ADMIN */
         .admin-scroll-menu {
@@ -306,94 +278,48 @@
             padding-bottom: 8px;
             font-weight: 600;
         }
-        .admin-menu-item { 
-            color: var(--text-muted); 
-            cursor: pointer; 
-            white-space: nowrap; 
-            padding-bottom: 8px; 
-        }
-        .admin-menu-item.active { 
-            color: var(--primary-color); 
-            font-weight: 700; 
-            border-bottom: 2px solid var(--primary-color); 
-        }
-        .admin-dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
+        .admin-menu-item { color: var(--text-muted); cursor: pointer; white-space: nowrap; padding-bottom: 8px; }
+        .admin-menu-item.active { color: var(--primary-color); font-weight: 700; border-bottom: 2px solid var(--primary-color); }
+        .admin-dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
         .stat-card { background: white; border-radius: 20px; padding: 20px; }
         .stat-value { font-size: 26px; font-weight: 700; color: var(--primary-color); margin-top: 5px; }
         
         .tx-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f8f8f8; }
-        .tx-avatar { width: 36px; height: 36px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: 700; }
+        .tx-avatar { width: 36px; height: 36px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: 700; text-transform: uppercase; }
 
-        /* ====================================================
-           MEDIA QUERIES: LAYOUT PENYESUAIAN DESKTOP (Layar Lebar)
-           ==================================================== */
+        /* RESPONSIVE DESKTOP MEDIA QUERIES */
         @media (min-width: 768px) {
-            /* 1. Grid Produk Menjadi 4 Kolom di Laptop/Desktop */
-            .product-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 20px;
-            }
-
-            /* 2. Banner Atas Menjadi Lebih Lebar dan Mewah */
-            .banner-koleksi {
-                height: 250px;
-            }
-
-            /* 3. Detail Produk Menjadi Kiri-Kanan (Split Screen) */
-            .detail-container {
-                flex-direction: row;
-                gap: 40px;
-                align-items: flex-start;
-            }
-            .detail-img {
-                flex: 1;
-                height: 450px;
-            }
-            .detail-content {
-                flex: 1;
-            }
-
-            /* 4. Dasbor Admin Menjadi Grid 2 Kolom */
-            .admin-dashboard-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-            }
-
-            /* 5. Navigasi Bawah Menempel di Sisi Atas Layar (Seperti Website Desktop Profesional) */
+            .product-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+            .banner-koleksi { height: 250px; }
+            .detail-container { flex-direction: row; gap: 40px; align-items: flex-start; }
+            .detail-img { flex: 1; height: 450px; }
+            .detail-content { flex: 1; }
+            .admin-dashboard-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
             .bottom-nav {
-                position: static; /* Lepas dari penempel bawah */
+                position: static; 
                 height: 70px;
                 background-color: var(--primary-color);
-                display: none; /* Diatur JS */
-                order: -1; /* Pindahkan posisi ke paling atas halaman */
+                display: none; 
+                order: -1; 
                 padding: 0 40px;
                 margin-bottom: 20px;
                 border-radius: 15px;
             }
-            
-            .app-container {
-                padding-bottom: 20px; /* Kembalikan padding normal karena nav tidak lagi di bawah */
-            }
+            .app-container { padding-bottom: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- CONTAINER UTAMA (Selalu Responsif) -->
     <div class="app-container">
         
-        <!-- TOP NAVIGATION BAR (Desktop) / BOTTOM (Mobile) -->
+        <!-- NAVIGATION BAR -->
         <div id="global-nav" class="bottom-nav">
             <span class="nav-item active" id="nav-btn-home" onclick="clickNav('home')">⌂ Beranda</span>
             <span class="nav-item" id="nav-btn-cart" onclick="clickNav('cart')">🛒 Keranjang</span>
             <span class="nav-item nav-text-btn" onclick="clickNav('logout')">Keluar 👤</span>
         </div>
 
-        <!-- AREA KONTEN -->
         <!-- ================= PAGE 1: REGISTER ================= -->
         <div id="page-register" class="page active">
             <div class="back-button">‹ Buat Akun</div>
@@ -434,9 +360,7 @@
             </div>
             
             <div class="banner-koleksi">
-                <div class="banner-text">
-                    <h3>Koleksi Eksklusif Baru</h3>
-                </div>
+                <div class="banner-text"><h3>Koleksi Eksklusif Baru</h3></div>
             </div>
             
             <div class="filter-tabs">
@@ -444,7 +368,6 @@
                 <button class="tab">BARU</button>
             </div>
             
-            <!-- Grid Produk (Otomatis 2 Kolom di HP, 4 Kolom di Laptop) -->
             <div class="product-grid">
                 <div class="product-card" onclick="bukaDetail('Gaun Midi Bunga', 'Rp. 580.000', 'https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=500')">
                     <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=500');"></div>
@@ -468,16 +391,12 @@
         <!-- ================= PAGE 4: DETAIL PRODUK ================= -->
         <div id="page-detail" class="page">
             <div class="back-button" onclick="navigateTo('page-beranda')">‹ Kembali ke Beranda</div>
-            
-            <!-- Menggunakan Flexbox Kiri-Kanan di Layar Lebar -->
             <div class="detail-container">
                 <div id="detail-img-box" class="detail-img"></div>
-                
                 <div class="detail-content">
                     <div id="detail-title-text" class="detail-title">Nama Produk</div>
                     <div id="detail-price-text" class="detail-price">Harga</div>
                     <p class="detail-desc">Material kain premium pilihan dengan pengerjaan jahitan yang sangat rapi dan detail sempurna. Memberikan siluet anggun sekaligus kenyamanan ekstra untuk aktivitas sepanjang hari.</p>
-                    
                     <div class="card-form" style="padding: 20px; margin-bottom: 20px; max-width: 100%;">
                         <div class="form-group"><label>Pilih Ukuran</label><select><option>M</option><option>L</option><option>XL</option></select></div>
                         <div class="form-group"><label>Jumlah Pembelian</label><input type="number" id="detail-qty" value="1" min="1"></div>
@@ -505,9 +424,7 @@
         <div id="page-pembayaran" class="page">
             <div class="back-button" onclick="navigateTo('page-keranjang')">‹ Kembali</div>
             <div class="card-form" style="max-width: 500px;">
-                <div class="payment-methods">
-                    <button class="method-btn active">Google Pay</button>
-                </div>
+                <div class="payment-methods"><button class="method-btn active">Google Pay</button></div>
                 <div class="form-group"><label>Nomor Akun Pembayaran</label><input type="text" value="G-PAY-9831-2941"></div>
                 <div class="form-group"><label>Nama Penerima</label><input type="text" value="Odilia Delfila Nana"></div>
                 <div class="form-group"><label>Alamat Lengkap</label><input type="text" value="Kota Kupang, NTT"></div>
@@ -528,7 +445,7 @@
                 <div id="sub-menu-laporan" class="admin-menu-item" onclick="switchSubAdmin('laporan')">Laporan Keuangan</div>
             </div>
 
-            <!-- SUB-PAGE ADMIN 1 (Grid 2 Kolom di Desktop) -->
+            <!-- SUB-PAGE ADMIN 1 -->
             <div id="admin-sub-dashboard" class="admin-sub-content">
                 <div class="admin-dashboard-grid">
                     <div>
@@ -536,16 +453,27 @@
                             <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight:600; color: var(--text-muted);"><span>TOTAL PENJUALAN</span><span style="color: green;">+12%</span></div>
                             <div class="stat-value" id="admin-penjualan-text">Rp. 28.535.000</div>
                         </div>
-                        
                         <div class="stat-card" style="border-left: 4px solid var(--primary-color);">
                             <h5 style="font-size: 12px; font-weight:700; color: var(--primary-color);" id="alert-title-stok">⚠️ Notifikasi Stok</h5>
                             <p style="font-size: 11px; color: var(--text-muted); margin-top: 2px;" id="stok-alert-text">Stok Set Blazer Klasik sisa 3 pcs (Kritis).</p>
                         </div>
                     </div>
 
+                    <!-- KOTAK RIWAYAT TRANSAKSI DENGAN DAFTAR NAMA REQUEST ANDA -->
                     <div class="stat-card" style="padding: 15px;">
                         <h4 style="font-size: 13px; margin-bottom: 12px; font-weight:700; color: var(--primary-color);">Riwayat Transaksi</h4>
                         <div id="admin-tx-list">
+                            
+                            <!-- 1. Odilia Nana -->
+                            <div class="tx-item">
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <div class="tx-avatar">O</div>
+                                    <div><h6 style="font-size:12px; font-weight:600;">Odilia Nana</h6><p style="font-size:10px; color:gray;">Gaun Midi Bunga</p></div>
+                                </div>
+                                <div style="text-align: right;"><h6 style="font-size:12px; font-weight:700;">Rp. 595.000</h6><p style="font-size:10px; color: green; font-weight:700;">Lunas</p></div>
+                            </div>
+
+                            <!-- 2. Intan Ndolu -->
                             <div class="tx-item">
                                 <div style="display: flex; gap: 10px; align-items: center;">
                                     <div class="tx-avatar">I</div>
@@ -553,6 +481,43 @@
                                 </div>
                                 <div style="text-align: right;"><h6 style="font-size:12px; font-weight:700;">Rp. 840.000</h6><p style="font-size:10px; color: green; font-weight:700;">Lunas</p></div>
                             </div>
+
+                            <!-- 3. Egriani Malelak -->
+                            <div class="tx-item">
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <div class="tx-avatar">E</div>
+                                    <div><h6 style="font-size:12px; font-weight:600;">Egriani Malelak</h6><p style="font-size:10px; color:gray;">Kemeja Linen Putih</p></div>
+                                </div>
+                                <div style="text-align: right;"><h6 style="font-size:12px; font-weight:700;">Rp. 435.000</h6><p style="font-size:10px; color: green; font-weight:700;">Lunas</p></div>
+                            </div>
+
+                            <!-- 4. Treshly Taopan -->
+                            <div class="tx-item">
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <div class="tx-avatar">T</div>
+                                    <div><h6 style="font-size:12px; font-weight:600;">Treshly Taopan</h6><p style="font-size:10px; color:gray;">Jaket Kulit Hitam</p></div>
+                                </div>
+                                <div style="text-align: right;"><h6 style="font-size:12px; font-weight:700;">Rp. 1.265.000</h6><p style="font-size:10px; color: green; font-weight:700;">Lunas</p></div>
+                            </div>
+
+                            <!-- 5. Imelda Baimetan -->
+                            <div class="tx-item">
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <div class="tx-avatar">I</div>
+                                    <div><h6 style="font-size:12px; font-weight:600;">Imelda baimetan</h6><p style="font-size:10px; color:gray;">Gaun Midi Bunga</p></div>
+                                </div>
+                                <div style="text-align: right;"><h6 style="font-size:12px; font-weight:700;">Rp. 595.000</h6><p style="font-size:10px; color: green; font-weight:700;">Lunas</p></div>
+                            </div>
+
+                            <!-- 6. Paula Fuah -->
+                            <div class="tx-item">
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <div class="tx-avatar">P</div>
+                                    <div><h6 style="font-size:12px; font-weight:600;">paula Fuah</h6><p style="font-size:10px; color:gray;">Set Blazer Klasik</p></div>
+                                </div>
+                                <div style="text-align: right;"><h6 style="font-size:12px; font-weight:700;">Rp. 840.000</h6><p style="font-size:10px; color: green; font-weight:700;">Lunas</p></div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -586,7 +551,7 @@
             </div>
         </div>
 
-    </div> <!-- Tutup App Container -->
+    </div>
 
     <!-- LOGIC SYSTEM CONTROLLER -->
     <script>
@@ -662,12 +627,14 @@
             totalPenjualanAdmin += (keranjang.total + 15000);
             document.getElementById('admin-penjualan-text').innerText = "Rp. " + totalPenjualanAdmin.toLocaleString('id-ID');
             const txList = document.getElementById('admin-tx-list');
+            
+            // Menggunakan inisial 'O' untuk simulasi transaksi baru dari user Odilia Nana
             const dataBaru = `
                 <div class="tx-item">
                     <div style="display: flex; gap: 10px; align-items: center;">
-                        <div class="tx-avatar" style="background-color: #43161A;">O</div>
+                        <div class="tx-avatar">O</div>
                         <div>
-                            <h6 style="font-size:12px; font-weight:600;">Odilia Delfila Nana</h6>
+                            <h6 style="font-size:12px; font-weight:600;">Odilia Nana</h6>
                             <p style="font-size:10px; color:gray;">${keranjang.nama}</p>
                         </div>
                     </div>
@@ -679,7 +646,7 @@
             `;
             txList.insertAdjacentHTML('afterbegin', dataBaru);
             
-            // Reset
+            // Reset state keranjang belanja
             document.getElementById('cart-item-title').innerText = "Belum Ada Produk";
             document.getElementById('cart-item-qty').innerText = "Jumlah: 0";
             document.getElementById('cart-subtotal').innerText = "Rp. 0";
