@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VogueAura - Professional Fashion Store</title>
+  
+  <!-- Menggunakan Font Mewah -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --maroon: #4A1A1E;
+      --dusty-rose: #E2C2B9;
+      --cream: #FAF7F2;
+      --white: #FFFFFF;
+      --gold: #C5A059;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body { 
+      background-color: var(--cream); 
+      color: #333; 
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding-bottom: 80px; /* Ruang untuk navbar bawah */
+    }
+
+    h1, h2, h3, .luxury-font { font-family: 'Cormorant Garamond', serif; font-weight: 600; }
+
+    /* NOTIFIKASI */
+    #notification-container {
+      position: fixed; top: 20px; right: 20px; z-index: 9999;
+    }
+    .notify {
+      background: var(--maroon); color: white; padding: 15px 25px; 
+      border-radius: 10px; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      animation: slideIn 0.5s ease forwards;
+    }
+    @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+    /* BOTTOM NAVIGATION */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; width: 100%; height: 70px;
+      background: var(--white); display: none; justify-content: space-around;
+      align-items: center; border-top: 1px solid var(--dusty-rose); z-index: 1000;
+    }
+    .nav-item { text-align: center; color: #888; cursor: pointer; flex: 1; transition: 0.3s; font-size: 12px; }
+    .nav-item.active { color: var(--maroon); font-weight: bold; }
+    .nav-item span { display: block; font-size: 20px; margin-bottom: 2px; }
+
+    /* LAYOUT PAGES */
+    .page { display: none; max-width: 1200px; margin: 0 auto; padding: 20px; animation: fadeIn 0.4s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* CARDS & UI */
+    .card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); margin-bottom: 20px; }
+    .btn { padding: 12px 25px; border: none; border-radius: 30px; cursor: pointer; font-weight: 600; transition: 0.3s; width: 100%; }
+    .btn-maroon { background: var(--maroon); color: white; }
+    .btn-maroon:hover { background: #331013; }
+
+    /* GRID STOK (20+ Items) */
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+    .product-card { background: white; border-radius: 15px; overflow: hidden; cursor: pointer; border: 1px solid #f0f0f0; transition: 0.3s; }
+    .product-card:hover { transform: translateY(-5px); border-color: var(--dusty-rose); }
+    .product-img { width: 100%; height: 280px; object-fit: cover; }
+
+    /* SETTINGS LIST */
+    .settings-list { list-style: none; }
+    .settings-item { 
+      padding: 15px; border-bottom: 1px solid #f0f0f0; display: flex; 
+      justify-content: space-between; cursor: pointer; transition: 0.2s;
+    }
+    .settings-item:hover { background: #fafafa; }
+
+    /* FORM & INPUT */
+    .input-group { margin-bottom: 15px; position: relative; }
+    .input-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; outline: none; }
+    .toggle-eye { position: absolute; right: 15px; top: 12px; cursor: pointer; }
+
+    /* CHAT/PESAN */
+    .chat-box { height: 400px; overflow-y: auto; background: #f9f9f9; padding: 15px; border-radius: 10px; border: 1px solid #eee; margin-bottom: 10px; }
+    .msg { margin-bottom: 10px; padding: 10px 15px; border-radius: 15px; max-width: 70%; font-size: 14px; line-height: 1.4; }
+    .msg-sent { background: var(--maroon); color: white; margin-left: auto; }
+    .msg-rcvd { background: var(--dusty-rose); color: var(--maroon); }
+  </style>
+</head>
+<body>
+
+  <!-- CONTAINER NOTIFIKASI -->
+  <div id="notification-container"></div>
+
+  <!-- BOTTOM NAV (Khusus Customer) -->
+  <nav class="bottom-nav" id="app-nav">
+    <div class="nav-item active" onclick="navigateToPage('beranda')"><span>🏠</span>Dashboard</div>
+    <div class="nav-item" onclick="navigateToPage('pesanan')"><span>📦</span>Pesanan</div>
+    <div class="nav-item" onclick="navigateToPage('pesan')"><span>💬</span>Pesan</div>
+    <div class="nav-item" onclick="navigateToPage('profil')"><span>👤</span>Profil</div>
+  </nav>
+
+  <!-- PAGE: DAFTAR -->
+  <div id="page-daftar" class="page active">
+    <div class="card" style="max-width: 400px; margin: 50px auto;">
+      <h2 style="text-align: center; margin-bottom: 20px;">Bergabung di VogueAura</h2>
+      <div class="input-group"><input type="text" id="reg-nama" placeholder="Nama Lengkap"></div>
+      <div class="input-group"><input type="text" id="reg-user" placeholder="Buat Username"></div>
+      <div class="input-group">
+        <input type="password" id="reg-pass" placeholder="Buat Kata Sandi">
+        <span class="toggle-eye" onclick="togglePass('reg-pass')">👁️</span>
+      </div>
+      <button class="btn btn-maroon" onclick="handleRegister()">DAFTAR</button>
+      <p style="text-align:center; font-size:12px; margin-top:15px;">Sudah punya akun? <b onclick="navigateToPage('login')" style="cursor:pointer;">Login</b></p>
+    </div>
+  </div>
+
+  <!-- PAGE: LOGIN -->
+  <div id="page-login" class="page">
+    <div class="card" style="max-width: 400px; margin: 80px auto;">
+      <h1 style="text-align:center; color:var(--maroon); margin-bottom:20px;">VogueAura</h1>
+      <div class="input-group"><input type="text" id="log-user" placeholder="Username"></div>
+      <div class="input-group">
+        <input type="password" id="log-pass" placeholder="Kata Sandi">
+        <span class="toggle-eye" onclick="togglePass('log-pass')">👁️</span>
+      </div>
+      <button class="btn btn-maroon" onclick="handleLogin()">MASUK</button>
+      <p style="text-align:center; font-size:12px; margin-top:15px;">Ketik <b>admin</b> untuk mode Manajemen</p>
+    </div>
+  </div>
+
+  <!-- PAGE: BERANDA (DASHBOARD) -->
+  <div id="page-beranda" class="page">
+    <h2 style="margin-bottom: 20px; font-size: 32px;">Katalog Eksklusif</h2>
+    <div class="product-grid" id="product-container">
+      <!-- Terisi 20+ item -->
+    </div>
+  </div>
+
+  <!-- PAGE: PESANAN -->
+  <div id="page-pesanan" class="page">
+    <h2 style="margin-bottom: 20px;">Riwayat Pesanan</h2>
+    <div id="order-list">
+      <div class="card">Anda belum melakukan pesanan apapun.</div>
+    </div>
+  </div>
+
+  <!-- PAGE: PESAN (MESSAGES) -->
+  <div id="page-pesan" class="page">
+    <h2 style="margin-bottom: 20px;">Pesan</h2>
+    <div class="card">
+      <div class="chat-box" id="chat-box"></div>
+      <div style="display:flex; gap:10px;">
+        <input type="text" id="chat-input" placeholder="Tulis pesan..." style="flex:1; padding:12px; border-radius:25px; border:1px solid #ddd;">
+        <button class="btn btn-maroon" style="width:100px;" onclick="sendMsg()">Kirim</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: PROFIL & PENGATURAN -->
+  <div id="page-profil" class="page">
+    <div class="card" style="text-align: center;">
+      <div style="width:80px; height:80px; background:var(--dusty-rose); border-radius:50%; margin:0 auto 10px auto; display:flex; align-items:center; justify-content:center; font-size:30px;" id="p-avatar">U</div>
+      <h3 id="p-nama">Pengguna Vogue</h3>
+      <p style="font-size:12px; color:#888;" id="p-user">@username</p>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom:15px;">Pengaturan</h3>
+      <ul class="settings-list">
+        <li class="settings-item" onclick="showSubSetting('Keamanan Akun')">🛡️ Keamanan Akun <span>></span></li>
+        <li class="settings-item" onclick="showSubSetting('Alamat Saya')">📍 Alamat Pengiriman <span>></span></li>
+        <li class="settings-item" onclick="showSubSetting('Pengaturan Pesan')">💬 Pengaturan Pesan <span>></span></li>
+        <li class="settings-item" onclick="showSubSetting('Notifikasi')">🔔 Pengaturan Notifikasi <span>></span></li>
+        <li class="settings-item" onclick="showSubSetting('Privasi')">🔒 Pengaturan Privasi <span>></span></li>
+        <li class="settings-item" onclick="showSubSetting('Bahasa')">🌐 Bahasa / Language (ID) <span>></span></li>
+        <li class="settings-item" onclick="showSubSetting('Bantuan')">❓ Pusat Bantuan <span>></span></li>
+        <li class="settings-item" style="color:var(--gold); font-weight:bold;" onclick="navigateToPage('login')">🔄 Ganti Akun</li>
+        <li class="settings-item" style="color:red;" onclick="logout()">🚪 Keluar</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PAGE: ADMIN DASHBOARD -->
+  <div id="page-admin" class="page">
+    <h2 style="margin-bottom:20px;">Admin Dashboard</h2>
+    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:15px; margin-bottom:20px;">
+      <div class="card" style="border-left:5px solid green;"><h4>Total Omzet</h4><p id="adm-omzet">Rp 0</p></div>
+      <div class="card" style="border-left:5px solid orange;"><h4>Menunggu</h4><p id="adm-pend">0 Trx</p></div>
+      <div class="card" style="border-left:5px solid var(--maroon);"><h4>Total Produk</h4><p id="adm-stok">20</p></div>
+    </div>
+    <div class="card">
+      <h3>Konfirmasi Transaksi</h3><br>
+      <table width="100%" style="text-align:left; font-size:14px;">
+        <thead><tr style="background:#f4f4f4;"><th>User</th><th>Produk</th><th>Total</th><th>Aksi</th></tr></thead>
+        <tbody id="adm-table"></tbody>
+      </table>
+    </div>
+    <button class="btn btn-maroon" onclick="logout()">Logout dari Admin</button>
+  </div>
+
+  <script>
+    /* ---------------------------------
+       DATA & STOK (20+ Items)
+    --------------------------------- */
+    let users = [{nama: "Administrator", user: "admin", pass: "admin123", role: "admin"}];
+    let currentUser = null;
+    let orders = [];
+    let messages = [];
+
+    const stokData = [
+      {id:1, n:"Silk Midnight Gown", h:1200000, img:"https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=400"},
+      {id:2, n:"Classic Ivory Blazer", h:850000, img:"https://images.unsplash.com/photo-1548624149-f7b311689dd6?q=80&w=400"},
+      {id:3, n:"Autumn Wool Coat", h:2100000, img:"https://images.unsplash.com/photo-1539533018447-63fcce2678e3?q=80&w=400"},
+      {id:4, n:"Floral Summer Midi", h:540000, img:"https://images.unsplash.com/photo-1572804013307-f9a8a9bc9067?q=80&w=400"},
+      {id:5, n:"Linen Wide Trousers", h:420000, img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=400"},
+      {id:6, n:"Emerald Satin Skirt", h:380000, img:"https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=400"},
+      {id:7, n:"Cashmere Turtleneck", h:750000, img:"https://images.unsplash.com/photo-1574164904299-3a102b110380?q=80&w=400"},
+      {id:8, n:"Modern Kebaya", h:3500000, img:"https://images.unsplash.com/photo-1582142306909-195724d33ffc?q=80&w=400"},
+      {id:9, n:"Crimson Red Dress", h:1100000, img:"https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?q=80&w=400"},
+      {id:10, n:"Pearl White Blouse", h:490000, img:"https://images.unsplash.com/photo-1583846714867-52c373e7185e?q=80&w=400"},
+      {id:11, n:"Leather Biker Jacket", h:2800000, img:"https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=400"},
+      {id:12, n:"Denim Highwaist Chic", h:600000, img:"https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=400"},
+      {id:13, n:"Velvet Evening Wrap", h:950000, img:"https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=400"},
+      {id:14, n:"Bohemian Maxi Skirt", h:720000, img:"https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=400"},
+      {id:15, n:"Parisian Beret Set", h:670000, img:"https://images.unsplash.com/photo-1511130558044-8996b2707f7c?q=80&w=400"},
+      {id:16, n:"Silk Scarf Pattern", h:320000, img:"https://images.unsplash.com/photo-1601924994987-69e26d50dc26?q=80&w=400"},
+      {id:17, n:"Pastel Knitted Cardigan", h:450000, img:"https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?q=80&w=400"},
+      {id:18, n:"Office Pinstripe Suit", h:2200000, img:"https://images.unsplash.com/photo-1594932224828-b4b059b6f6f8?q=80&w=400"},
+      {id:19, n:"Vintage Polkadot", h:620000, img:"https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?q=80&w=400"},
+      {id:20, n:"Minimalist T-Shirt", h:250000, img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=400"}
+    ];
+
+    /* ---------------------------------
+       FUNCTIONS CORE
+    --------------------------------- */
+    function notify(text) {
+      const container = document.getElementById('notification-container');
+      const div = document.createElement('div');
+      div.className = 'notify';
+      div.innerText = '🔔 ' + text;
+      container.appendChild(div);
+      setTimeout(() => div.remove(), 3000);
+    }
+
+    function navigateToPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + pageId).classList.add('active');
+      
+      // Update Bottom Nav Styling
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if(item.innerText.includes(pageId === 'beranda' ? 'Dashboard' : pageId.charAt(0).toUpperCase() + pageId.slice(1))) {
+          item.classList.add('active');
+        }
+      });
+
+      if(pageId === 'beranda') renderProducts();
+      if(pageId === 'admin') renderAdmin();
+      if(pageId === 'pesanan') renderOrders();
+      if(pageId === 'pesan') renderMessages();
+      window.scrollTo(0,0);
+    }
+
+    function togglePass(id) {
+      const x = document.getElementById(id);
+      x.type = x.type === "password" ? "text" : "password";
+    }
+
+    /* ---------------------------------
+       AUTH & LOGIN
+    --------------------------------- */
+    function handleRegister() {
+      const nama = document.getElementById('reg-nama').value;
+      const user = document.getElementById('reg-user').value;
+      const pass = document.getElementById('reg-pass').value;
+      if(!nama || !user || !pass) return notify("Lengkapi data daftar!");
+      users.push({nama, user, pass, role: "customer"});
+      notify("Daftar Berhasil! Silakan Login.");
+      navigateToPage('login');
+    }
+
+    function handleLogin() {
+      const u = document.getElementById('log-user').value;
+      const p = document.getElementById('log-pass').value;
+      const user = users.find(x => x.user === u && x.pass === p);
+      if(user) {
+        currentUser = user;
+        notify("Selamat Datang, " + user.nama);
+        if(user.role === 'admin') {
+          document.getElementById('app-nav').style.display = 'none';
+          navigateToPage('admin');
+        } else {
+          document.getElementById('app-nav').style.display = 'flex';
+          document.getElementById('p-nama').innerText = user.nama;
+          document.getElementById('p-user').innerText = "@"+user.user;
+          document.getElementById('p-avatar').innerText = user.nama.charAt(0).toUpperCase();
+          navigateToPage('beranda');
+        }
+      } else notify("Username/Password Salah!");
+    }
+
+    function logout() {
+      currentUser = null;
+      document.getElementById('app-nav').style.display = 'none';
+      notify("Berhasil Keluar.");
+      navigateToPage('login');
+    }
+
+    /* ---------------------------------
+       SHOPPING LOGIC
+    --------------------------------- */
+    function renderProducts() {
+      const container = document.getElementById('product-container');
+      container.innerHTML = "";
+      stokData.forEach(item => {
+        container.innerHTML += `
+          <div class="product-card" onclick="beliProduk(${item.id})">
+            <img src="${item.img}" class="product-img">
+            <div style="padding:15px;">
+              <h4 class="luxury-font">${item.n}</h4>
+              <p style="color:var(--maroon); font-weight:bold; margin-top:5px;">Rp ${item.h.toLocaleString()}</p>
+            </div>
+          </div>`;
+      });
+    }
+
+    function beliProduk(id) {
+      const item = stokData.find(x => x.id === id);
+      const ok = confirm("Beli " + item.n + " seharga Rp " + item.h.toLocaleString() + "?");
+      if(ok) {
+        orders.unshift({
+          user: currentUser.user,
+          namaUser: currentUser.nama,
+          produk: item.n,
+          total: item.h,
+          status: "Pending"
+        });
+        notify("Pesanan dibuat! Menunggu konfirmasi admin.");
+        navigateToPage('pesanan');
+      }
+    }
+
+    function renderOrders() {
+      const container = document.getElementById('order-list');
+      const myOrders = orders.filter(x => x.user === currentUser.user);
+      if(myOrders.length === 0) {
+        container.innerHTML = `<div class="card">Belum ada pesanan.</div>`;
+        return;
+      }
+      container.innerHTML = myOrders.map(o => `
+        <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
+          <div><b>${o.produk}</b><br><small>Rp ${o.total.toLocaleString()}</small></div>
+          <span style="color:${o.status === 'Sukses' ? 'green' : 'orange'}; font-weight:bold;">${o.status}</span>
+        </div>
+      `).join("");
+    }
+
+    /* ---------------------------------
+       PESAN (MESSAGES)
+    --------------------------------- */
+    function sendMsg() {
+      const input = document.getElementById('chat-input');
+      if(!input.value) return;
+      messages.push({ sender: currentUser.user, text: input.value });
+      input.value = "";
+      notify("Pesan dikirim!");
+      renderMessages();
+    }
+
+    function renderMessages() {
+      const box = document.getElementById('chat-box');
+      box.innerHTML = messages.map(m => `
+        <div class="msg ${m.sender === currentUser.user ? 'msg-sent' : 'msg-rcvd'}">${m.text}</div>
+      `).join("");
+      box.scrollTop = box.scrollHeight;
+    }
+
+    /* ---------------------------------
+       ADMIN SYSTEM
+    --------------------------------- */
+    function renderAdmin() {
+      let rev = 0; let pend = 0;
+      const tbody = document.getElementById('adm-table');
+      tbody.innerHTML = "";
+      orders.forEach((o, index) => {
+        if(o.status === 'Sukses') rev += o.total;
+        else pend++;
+        tbody.innerHTML += `
+          <tr>
+            <td>${o.namaUser}</td>
+            <td>${o.produk}</td>
+            <td>Rp ${o.total.toLocaleString()}</td>
+            <td>${o.status === 'Pending' ? `<button onclick="confirmOrder(${index})" style="background:green; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">Konfirmasi</button>` : 'Selesai'}</td>
+          </tr>`;
+      });
+      document.getElementById('adm-omzet').innerText = "Rp " + rev.toLocaleString();
+      document.getElementById('adm-pend').innerText = pend;
+    }
+
+    function confirmOrder(idx) {
+      orders[idx].status = 'Sukses';
+      notify("Pesanan Dikonfirmasi!");
+      renderAdmin();
+    }
+
+    /* ---------------------------------
+       SETTINGS & OTHERS
+    --------------------------------- */
+    function showSubSetting(title) {
+      notify("Membuka " + title + "...");
+      alert("Fitur " + title + " sedang dalam pemeliharaan sistem VogueAura.");
+    }
+  </script>
+</body>
+</html>
